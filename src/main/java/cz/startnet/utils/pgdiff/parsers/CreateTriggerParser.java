@@ -39,6 +39,10 @@ public class CreateTriggerParser {
         } else if (parser.expectOptional("AFTER")) {
             trigger.setBefore(false);
         }
+        /* instead support */
+        if(parser.expectOptional("INSTEAD","OF")){
+        	trigger.setInsteadOf(true);
+        }
 
         boolean first = true;
 
@@ -94,6 +98,13 @@ public class CreateTriggerParser {
 
         parser.expect("EXECUTE", "PROCEDURE");
         trigger.setFunction(parser.getRest());
+
+        final PgSchema tableSchemaInst = database.getSchema(
+                ParserUtils.getSchemaName(tableName, database));
+        if(!trigger.isInsteadOf())
+        	tableSchemaInst.getTable(trigger.getTableName()).addTrigger(trigger);
+        else
+        	tableSchemaInst.getView(trigger.getTableName()).addTrigger(trigger);
 
         final boolean ignoreSlonyTrigger = ignoreSlonyTriggers
                 && ("_slony_logtrigger".equals(trigger.getName())

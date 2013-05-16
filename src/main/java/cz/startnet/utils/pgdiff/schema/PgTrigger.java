@@ -17,7 +17,15 @@ import java.util.List;
  */
 public class PgTrigger {
 
-    /**
+    public boolean isInsteadOf() {
+		return insteadOf;
+	}
+
+	public void setInsteadOf(boolean insteadOf) {
+		this.insteadOf = insteadOf;
+	}
+
+	/**
      * Function name and arguments that should be fired on the trigger.
      */
     private String function;
@@ -55,6 +63,9 @@ public class PgTrigger {
      * Whether the trigger should be fired on TRUNCATE.
      */
     private boolean onTruncate;
+    /* instead of */
+    private boolean insteadOf;
+
     /**
      * Optional list of columns for UPDATE event.
      */
@@ -63,6 +74,7 @@ public class PgTrigger {
     /**
      * WHEN condition.
      */
+    
     private String when;
     /**
      * Comment.
@@ -115,7 +127,11 @@ public class PgTrigger {
         sbSQL.append("CREATE TRIGGER ");
         sbSQL.append(PgDiffUtils.getQuotedName(getName()));
         sbSQL.append("\n\t");
-        sbSQL.append(isBefore() ? "BEFORE" : "AFTER");
+        
+        if(isInsteadOf())
+        	sbSQL.append("INSTEAD OF ");
+        else
+        	sbSQL.append(isBefore() ? "BEFORE" : "AFTER");
 
         boolean firstEvent = true;
 
@@ -401,8 +417,8 @@ public class PgTrigger {
                     && (onInsert == trigger.isOnInsert())
                     && (onUpdate == trigger.isOnUpdate())
                     && (onTruncate == trigger.isOnTruncate())
-                    && tableName.equals(trigger.getTableName());
-
+                    && tableName.equals(trigger.getTableName())
+                    && (insteadOf == trigger.isInsteadOf());
             if (equals) {
                 final List<String> sorted1 =
                         new ArrayList<String>(updateColumns);
@@ -422,6 +438,6 @@ public class PgTrigger {
     public int hashCode() {
         return (getClass().getName() + "|" + before + "|" + forEachRow + "|"
                 + function + "|" + name + "|" + onDelete + "|" + onInsert + "|"
-                + onUpdate + "|" + onTruncate + "|" + tableName).hashCode();
+                + onUpdate + "|" + onTruncate + "|" + insteadOf + "|" + tableName).hashCode();
     }
 }
