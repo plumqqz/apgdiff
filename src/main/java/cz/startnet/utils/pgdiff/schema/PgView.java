@@ -40,6 +40,12 @@ public class PgView {
     private final List<ColumnComment> columnComments =
             new ArrayList<ColumnComment>(0);
     /**
+     * List of triggers defined on the table.
+     */
+    @SuppressWarnings("CollectionWithoutInitialCapacity")
+    private final List<PgTrigger> triggers = new ArrayList<PgTrigger>();
+    
+    /**
      * Comment.
      */
     private String comment;
@@ -346,4 +352,16 @@ public class PgView {
             return comment;
         }
     }
+
+	public void addTrigger(PgTrigger trigger) {
+		triggers.add(trigger);
+	}
+    /**
+     * Getter for {@link #triggers}. The list cannot be modified.
+     *
+     * @return {@link #triggers}
+     */
+    public List<PgTrigger> getTriggers() {
+        return Collections.unmodifiableList(triggers);
+    }	
 }

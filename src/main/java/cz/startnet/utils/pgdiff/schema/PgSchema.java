@@ -282,7 +282,6 @@ public class PgSchema {
                 return table;
             }
         }
-
         return null;
     }
 

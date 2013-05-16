@@ -132,7 +132,7 @@ public class PgFunction {
     public String getDropSQL() {
         final StringBuilder sbString = new StringBuilder(100);
         sbString.append("DROP FUNCTION ");
-        sbString.append(name);
+        sbString.append(PgDiffUtils.getQuotedName(name));
         sbString.append('(');
 
         boolean addComma = false;
