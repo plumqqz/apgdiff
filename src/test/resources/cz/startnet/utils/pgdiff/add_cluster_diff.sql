@@ -20,4 +20,5 @@ CREATE INDEX testtable2_col1 ON testtable2 USING btree (col1);
 
 ALTER TABLE testtable CLUSTER ON testindex;
 
+
 ALTER TABLE testtable2 CLUSTER ON testtable2_col1;

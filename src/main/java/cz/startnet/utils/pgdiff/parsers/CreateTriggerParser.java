@@ -38,9 +38,8 @@ public class CreateTriggerParser {
             trigger.setBefore(true);
         } else if (parser.expectOptional("AFTER")) {
             trigger.setBefore(false);
-        }
-        /* instead support */
-        if(parser.expectOptional("INSTEAD","OF")){
+        }/* instead support */ else if(parser.expectOptional("INSTEAD","OF")){
+                trigger.setBefore(false);
         	trigger.setInsteadOf(true);
         }
 
