@@ -64,6 +64,11 @@ public class PgTable {
      * Comment.
      */
     private String comment;
+    
+    /**
+     * Is unlogged? 
+     */
+    private boolean isUnlogged;
 
     /**
      * Creates a new PgTable object.
@@ -508,4 +513,12 @@ public class PgTable {
 
         return list;
     }
+
+	public boolean isUnlogged() {
+		return isUnlogged;
+	}
+
+	public void setIsUnlogged(boolean isunlogged) {
+		this.isUnlogged = isunlogged;
+	}
 }
