@@ -38,6 +38,7 @@ public class PgTable {
      */
     @SuppressWarnings("CollectionWithoutInitialCapacity")
     private final List<PgTrigger> triggers = new ArrayList<PgTrigger>();
+
     /**
      * Name of the index on which the table is clustered
      */
@@ -430,6 +431,8 @@ public class PgTable {
      * @param index index
      */
     public void addIndex(final PgIndex index) {
+        if(null==index) return;
+        if(indexes.contains(index)) return;
         indexes.add(index);
     }
 
@@ -439,6 +442,7 @@ public class PgTable {
      * @param trigger trigger
      */
     public void addTrigger(final PgTrigger trigger) {
+        if(triggers.contains(trigger)) return;
         triggers.add(trigger);
     }
 

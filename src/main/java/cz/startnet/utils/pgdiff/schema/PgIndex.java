@@ -167,7 +167,9 @@ public class PgIndex {
     @Override
     public boolean equals(final Object object) {
         boolean equals = false;
-
+        
+        if(null==object || null==definition)
+            return false;
         if (this == object) {
             equals = true;
         } else if (object instanceof PgIndex) {

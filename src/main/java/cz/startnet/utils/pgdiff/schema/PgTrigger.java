@@ -19,11 +19,11 @@ public class PgTrigger {
 
     public boolean isInsteadOf() {
 		return insteadOf;
-	}
+    }
 
-	public void setInsteadOf(boolean insteadOf) {
+    public void setInsteadOf(final boolean insteadOf) {
 		this.insteadOf = insteadOf;
-	}
+    }
 
 	/**
      * Function name and arguments that should be fired on the trigger.
@@ -64,7 +64,7 @@ public class PgTrigger {
      */
     private boolean onTruncate;
     /* instead of */
-    private boolean insteadOf;
+    private boolean insteadOf = false;
 
     /**
      * Optional list of columns for UPDATE event.
@@ -430,7 +430,6 @@ public class PgTrigger {
                 equals = sorted1.equals(sorted2);
             }
         }
-
         return equals;
     }
 

@@ -333,7 +333,7 @@ public class PgDiffTest {
         reader.close();
 
         Assert.assertEquals("File name template: " + fileNameTemplate,
-                sbExpDiff.toString().trim(),
-                diffInput.toString().trim());
+                sbExpDiff.toString().trim().replace("\r"," ").replace("\n"," ").replaceAll(" +", " "),
+                diffInput.toString().trim().replace("\r"," ").replace("\n"," ").replaceAll(" +", " "));
     }
 }
