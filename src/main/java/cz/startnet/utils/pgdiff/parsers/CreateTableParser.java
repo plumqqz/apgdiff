@@ -29,7 +29,13 @@ public class CreateTableParser {
     public static void parse(final PgDatabase database,
             final String statement) {
         final Parser parser = new Parser(statement);
-        parser.expect("CREATE", "TABLE");
+        parser.expect("CREATE");
+        
+        boolean isUnlogged=false;
+        if(parser.expectOptional("UNLOGGED"))
+        	isUnlogged = true;
+        
+        parser.expect("TABLE");
 
         // Optional IF NOT EXISTS, irrelevant for our purposes
         parser.expectOptional("IF", "NOT", "EXISTS");
@@ -39,6 +45,7 @@ public class CreateTableParser {
         final String schemaName =
                 ParserUtils.getSchemaName(tableName, database);
         final PgSchema schema = database.getSchema(schemaName);
+        table.setIsUnlogged(isUnlogged);
 
         if (schema == null) {
             throw new RuntimeException(MessageFormat.format(
