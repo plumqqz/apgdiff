@@ -354,6 +354,13 @@ public class PgDumpLoader { //NOPMD
         boolean isQuoted = false;
 
         for (int curPos = 0; curPos < pos; curPos++) {
+            if (!isQuoted && sbString.charAt(curPos)=='"'){
+                curPos++;
+                while(sbString.charAt(curPos)!='"' && curPos<pos) curPos++;
+                if(curPos==pos){
+                    return false;
+                }
+            }
             if (sbString.charAt(curPos) == '\'') {
                 isQuoted = !isQuoted;
 
